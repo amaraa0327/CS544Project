@@ -26,43 +26,51 @@
     
   </head>
 <body>
-	<%@ include file="header.jsp"%>
-	<section id="appointment">
+	<%@ include file="../header.jsp"%>
+	<section id="sessions">
 	<form action="">
 	<div class="container">
 	<div class="row">
         <div class="col-md-12">
-        <h2 class="center">Create Appointment</h2>
-        <div class="table-responsive">
+       	</div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+   		<div class="table-responsive">
 	<table class="table table-bordred table-striped">
 		 <thead>
-			<th>Session ID</th>
+			<th>Appointment ID</th>
 			<th>Date</th>
 			<th>Start Time</th>
 			<th>Duration</th>
 			<th>Location</th>
 			<th>Counselor</th>
-			<th>Available Seats</th>
+			<th>No of Seats</th>
+			<th>Customer Name</th>
 			<th>Action</th>
 		</thead>
 		<tbody>
-		<c:forEach var="session" items="${sessions}">
+		<c:forEach var="appt" items="${appointments}">
 			<tr>
-				<td>${session.id}</td>
-				<td>${session.date}</td>
-				<td>${session.time}</td>
-				<td>${session.duration}</td>
-				<td>${session.location.building}</td>
-				<td>${session.counselor.firstName}</td>
-				<td>${session.capacity-session.attendees.size()}</td>
-				<td><a href="save?sessionID=${session.id}">signup</a></td>
+				<td>${appt.id}</td>
+				<td>${appt.session.date}</td>
+				<td>${appt.session.time}</td>
+				<td>${appt.session.duration}</td>
+				<td>${appt.session.location.building}</td>
+				<td>${appt.session.counselor.firstName}</td>
+				<td>${appt.session.capacity}</td>
+				<td>${appt.person.getFullName()}</td>
+				<td><a href="delete?apptID=${appt.id}"><span class="glyphicon glyphicon-trash"></span></a></td>
+				</form>
 			</tr>
 		</c:forEach>
 		</tbody>
 	</table>
-</div>
-	</form>
-	</section>
+	</div>
+	</div>
+	</div>
+</form>
+</section>
 
     <section id="bottom">
         <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
@@ -136,7 +144,7 @@
 		</div><!--/.container-->
 	</div><!--/.top-bar-->
 	
-	<%@ include file="footer.jsp"%>
+	<%@ include file="../footer.jsp"%>
 	
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="/js/jquery.js"></script>

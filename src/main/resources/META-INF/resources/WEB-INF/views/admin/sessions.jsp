@@ -26,53 +26,55 @@
     
   </head>
 <body>
-	<%@ include file="header.jsp"%>
+	<%@ include file="../header.jsp"%>
 	<section id="sessions">
 	<form action="">
 	<div class="container">
 	<div class="row">
-        <div class="col-md-12">
-        <h2 class="center">Delete Appointment</h2>
-        <h3 class="center"><a href="/appointmentManage">Manage Appointment</a><br/></h3>
-       	</div>
+        <div class="col-md-12" style="float: right">
+        	<a class="session_add" href="/admin/session_create">Add Session</a>
+        </div>
     </div>
-    <div class="row">
+	<div class="row">
         <div class="col-md-12">
-   		<div class="table-responsive">
-	<table class="table table-bordred table-striped">
-		 <thead>
-			<th>Appointment ID</th>
-			<th>Date</th>
-			<th>Start Time</th>
-			<th>Duration</th>
-			<th>Location</th>
-			<th>Counselor</th>
-			<th>No of Seats</th>
-			<th>Customer Name</th>
-			<th>Action</th>
-		</thead>
-		<tbody>
-		<c:forEach var="appt" items="${appointments}">
-			<tr>
-				<td>${appt.id}</td>
-				<td>${appt.session.date}</td>
-				<td>${appt.session.time}</td>
-				<td>${appt.session.duration}</td>
-				<td>${appt.session.location.building}</td>
-				<td>${appt.session.counselor.firstName}</td>
-				<td>${appt.session.capacity}</td>
-				<td>${appt.person.getFullName()}</td>
-				<td><a href="delete?apptID=${appt.id}"><span class="glyphicon glyphicon-trash"></span></a></td>
-				</form>
-			</tr>
-		</c:forEach>
-		</tbody>
-	</table>
+        <!-- <h2 class="center">All Sessions</h2> -->
+        <div class="table-responsive">
+		<table id="mytable" class="table table-bordred table-striped">
+			 <thead>
+				<th>Session ID</th>
+				<th>Date</th>
+				<th>Start Time</th>
+				<th>Duration</th>
+				<th>Location</th>
+				<th>Counselor</th>
+				<th>No of Seats</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				<c:forEach var="session" items="${sessions}">
+				<tr>
+					<td>${session.id}</td>
+					<td>${session.date}</td>
+					<td>${session.time}</td>
+					<td>${session.duration}</td>
+					<td>${session.location.building}</td>
+					<td>${session.counselor.firstName}</td>
+					<td>${session.capacity}</td>
+					<td>
+					<a href="session_edit/${session.id}"><span class="glyphicon glyphicon-pencil"></span></a>
+						<a onclick="return confirm('Are you sure you want to delete this item?');" href="session_delete/${session.id}"><span class="glyphicon glyphicon-trash"></span></a>
+					</td>
+				</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		</div>
+		</div>
 	</div>
+	
 	</div>
-	</div>
-</form>
-</section>
+	</form>
+	</section>
 
     <section id="bottom">
         <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
@@ -146,7 +148,7 @@
 		</div><!--/.container-->
 	</div><!--/.top-bar-->
 	
-	<%@ include file="footer.jsp"%>
+	<%@ include file="../footer.jsp"%>
 	
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="/js/jquery.js"></script>

@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="en">
@@ -12,47 +13,77 @@
     <title>Appointment Management System</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link href="css/animate.min.css" rel="stylesheet">
-    <link href="css/prettyPhoto.css" rel="stylesheet">      
-	<link href="css/main.css" rel="stylesheet">
-	 <link href="css/responsive.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/css/font-awesome.min.css">
+	<link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/prettyPhoto.css" rel="stylesheet">      
+	<link href="/css/main.css" rel="stylesheet">
+	 <link href="/css/responsive.css" rel="stylesheet">
 	 <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
     <![endif]-->       
     
   </head>
-  <body class="homepage">   
-	<%@ include file="header.jsp"%>
-	
-	<section id="contact-page">
-        <div class="container">
-            <div class="center">        
-                <h2>Appointment Admin Management</h2>
-                <p class="lead">Enter Customer Id</p>
-            </div> 
-            <div class="row contact-wrap"> 
-                <div class="status alert alert-success" style="display: none"></div>
-                <form id="main-contact-form" class="contact-form" name="contact-form" method="post" action="login">
-                    <div class="col-sm-5 col-sm-offset-1">
-                        <div class="form-group">
+<body>
+	<%@ include file="../header.jsp"%>
+	<section id="sessions">
+	<form action="">
+	<div class="container">
+	<div class="row">
+        <div class="col-md-12">
+       	</div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+   		<div class="table-responsive">
+		<table class="table table-bordred table-striped">
+			 <thead>
+				<th>Session ID</th>
+				<th>Date</th>
+				<th>Start Time</th>
+				<th>Duration</th>
+				<th>Location</th>
+				<th>Counselor</th>
+				<th>No of Seats</th>
+				<th>Customers</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+			<c:forEach var="session" items="${sessions}">
+				
+			<tr>
+				<td>${session.id}</td>
+				<td>${session.date}</td>
+				<td>${session.time}</td>
+				<td>${session.duration}</td>
+				<td>${session.location.building}</td>
+				<td>${session.counselor.firstName}</td>
+				<td>${session.capacity}</td>
+				
+				<form action="/admin/apptRegisterCustomer/${session.id}" method="post">
+					<td>
+						<select id="person" name="person" class="form-control">
+							<c:forEach var="person" items="${persons}">
+								<option id="1" value="${person.username}">${person.username}</option>
+							</c:forEach>
+						</select>
+					</td>
+					<td>
+						<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
+						<input type="submit" value="Make appointment" class="btn btn-primary btn-lg">
+					</td>
+				</form>
+			</tr>
+			</c:forEach>
+			</tbody>
+		</table>
+	</div>
+	</div>
+	</div>
+</form>
+</section>
 
-                        <div class="form-group">
-                            <label>Customer Id</label>
-                            <input type="number" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" name="submit" class="btn btn-primary btn-lg" required="required">Submit</button>
-                        </div>
-                    </div>
-                </form> 
-            </div><!--/.row-->
-        </div><!--/.container-->
-    </section><!--/#contact-page-->
-<br/><br/>
-<a href="/appointmentDelete">Delete Appointment</a>
     <section id="bottom">
         <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
             <div class="row">
@@ -125,14 +156,14 @@
 		</div><!--/.container-->
 	</div><!--/.top-bar-->
 	
-	<%@ include file="footer.jsp"%>
+	<%@ include file="../footer.jsp"%>
 	
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.prettyPhoto.js"></script>
-    <script src="js/jquery.isotope.min.js"></script>   
-    <script src="js/wow.min.js"></script>
-	<script src="js/main.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.prettyPhoto.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>   
+    <script src="/js/wow.min.js"></script>
+	<script src="/js/main.js"></script>
   </body>
 </html>

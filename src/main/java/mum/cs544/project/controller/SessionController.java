@@ -43,63 +43,65 @@ public class SessionController {
 	@RequestMapping(value={"/admin/sessions"}, method = RequestMethod.GET)
 	public String getAllSessions(Model model) {
 		model.addAttribute("sessions", sessionService.getAllSessions());
-		return "sessions";
+		return "/admin/sessions";
 	}
 
-	@RequestMapping(value = "/createSession", method = RequestMethod.GET)
-	public String getAllSessions(@Valid Session session) {
-		return "createSession";
-	}
+//	@RequestMapping(value = "/admin/createSession", method = RequestMethod.GET)
+//	public String getAllSessions(@Valid Session session) {
+//		return "createSession";
+//	}
 
-	@RequestMapping(value = "/sessions", method = RequestMethod.POST)
-	public String createSession(@Valid Session session, BindingResult result) {
-		String view = "redirect:/sessions";
-		if (!result.hasErrors())
-			sessionService.createSession(session);
-		else
-			view = "createSession";
+//	@RequestMapping(value = "/admin/sessions", method = RequestMethod.POST)
+//	public String createSession(@Valid Session session, BindingResult result) {
+//		String view = "redirect:/admin/sessions";
+//		if (!result.hasErrors())
+//			sessionService.createSession(session);
+//		else
+//			view = "createSession";
+//
+//		return view;
+//	}
 
-		return view;
-	}
-
-	@RequestMapping(value = "/session_edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/session_edit/{id}", method = RequestMethod.GET)
 	public String ediPlayer(@ModelAttribute("sessionForUpdated") Session session, Model model, @PathVariable("id") Long id) {
 		Session sessionForUpdated = sessionService.getSessionById(id);
 		model.addAttribute("sessionForUpdated", sessionForUpdated);
 
-		return "session_edit";
+		return "/admin/session_edit";
 	}
 
-	@RequestMapping(value = { "/session_edit/{id}" }, method = RequestMethod.POST)
+	
+	@RequestMapping(value = { "admin/session_edit/{id}" }, method = RequestMethod.POST)
 	public String editSession(@Valid @ModelAttribute("sessionForUpdated") Session session, BindingResult bindingresult, Model model, @PathVariable("id") Long id) {
 		if (bindingresult.hasErrors()) {
-			return "session_edit";
+			model.addAttribute("id", id);
+			return "/admin/session_edit";
 		}
 		sessionService.editSession(session,id);
-		return "redirect:/sessions";
+		return "redirect:/admin/sessions";
 	}
 	
-	@RequestMapping(value = "/session_create", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/session_create", method = RequestMethod.GET)
 	public String addPlayer(@ModelAttribute("addSession") Session session, Model model) {
-		return "session_create";
+		return "/admin/session_create";
 	}
 	
-	@RequestMapping(value = "/session_create", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/session_create", method = RequestMethod.POST)
 	public String addPlayer(@Valid @ModelAttribute("addSession") Session session, BindingResult bindingresult, Model model, HttpServletRequest request,
 			RedirectAttributes redirectAttributes) {
 		if (bindingresult.hasErrors()) 
-			return "session_create";
+			return "/admin/session_create";
 
 		sessionService.addSession(session);
 		redirectAttributes.addFlashAttribute("session", session);
 		//redirectAttributes.addFlashAttribute("message", "Added successfully.");
-		return "redirect:/sessions";
+		return "redirect:/admin/sessions";
 	}
 	
-	@RequestMapping(value = "/session_delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/session_delete/{id}", method = RequestMethod.GET)
 	public String delete(@PathVariable("id") Long id) {	
 		sessionService.deleteSession(id);
-		return "redirect:/sessions";
+		return "redirect:/admin/sessions";
 	}
 
 	@ModelAttribute("locations")

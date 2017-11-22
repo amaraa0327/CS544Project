@@ -26,65 +26,44 @@
     
   </head>
 <body>
-	<%@ include file="header.jsp"%>
-	<section id="sessions">
+	<%@ include file="../header.jsp"%>
+	<section id="appointment">
 	<form action="">
 	<div class="container">
 	<div class="row">
         <div class="col-md-12">
-        <h2 class="center">Manage Appointment</h2>
-        <h3 class="center"><a href="/appointmentDelete">Delete Appointment</a></h3>
-       	</div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-   		<div class="table-responsive">
-		<table class="table table-bordred table-striped">
-			 <thead>
-				<th>Session ID</th>
-				<th>Date</th>
-				<th>Start Time</th>
-				<th>Duration</th>
-				<th>Location</th>
-				<th>Counselor</th>
-				<th>No of Seats</th>
-				<th>Customers</th>
-				<th>Action</th>
-			</thead>
-			<tbody>
-			<c:forEach var="session" items="${sessions}">
-				
+        <h2 class="center">My Appointments</h2>
+        <div class="table-responsive">
+	<table class="table table-bordred table-striped">
+		<thead>
+			<th>Appointment ID</th>
+			<th>Date</th>
+			<th>Start Time</th>
+			<th>Duration</th>
+			<th>Location</th>
+			<th>Counselor</th>
+			<th>No of Seats</th>
+			<th>Action</th>
+		</thead>
+		<tbody>
+		<c:forEach var="appt" items="${appointments}">
 			<tr>
-				<td>${session.id}</td>
-				<td>${session.date}</td>
-				<td>${session.time}</td>
-				<td>${session.duration}</td>
-				<td>${session.location.building}</td>
-				<td>${session.counselor.firstName}</td>
-				<td>${session.capacity}</td>
-				
-				<form action="apptRegisterCustomer/${session.id}/" method="post">
-				<td>
-				<select id="person" name="person" class="form-control">
-				<c:forEach var="person" items="${persons}">
-				<option id="1" value="${person.username}">${person.username}</option>
-				</c:forEach>
-				</select>
-				</td>
-				<td>
-				<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
-				<input type="submit" value="Make appointment" class="btn btn-primary btn-lg">
-				</td>
-			</tr>
+				<td>${appt.id}</td>
+				<td>${appt.session.date}</td>
+				<td>${appt.session.time}</td>
+				<td>${appt.session.duration}</td>
+				<td>${appt.session.location.building}</td>
+				<td>${appt.session.counselor.firstName}</td>
+				<td>${appt.session.capacity}</td>
+				<td><a onclick="return confirm('Are you sure you want to delete this appointment?');" href="deleteappointment?apptID=${appt.id}">delete</a></td>
 				</form>
-			</c:forEach>
-			</tbody>
-		</table>
-	</div>
-	</div>
-	</div>
-</form>
-</section>
+			</tr>
+		</c:forEach>
+		</tbody>
+	</table>
+</div>
+	</form>
+	</section>
 
     <section id="bottom">
         <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
@@ -158,7 +137,7 @@
 		</div><!--/.container-->
 	</div><!--/.top-bar-->
 	
-	<%@ include file="footer.jsp"%>
+	<%@ include file="../footer.jsp"%>
 	
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="/js/jquery.js"></script>

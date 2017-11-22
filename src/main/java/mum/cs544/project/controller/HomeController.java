@@ -37,7 +37,7 @@ public class HomeController {
 			case "ROLE_COUNSELOR":
 				return "redirect:/counselor/facultyPage";
 			case "ROLE_CUSTOMER":
-				return "redirect:/customer/findStudent";
+				return "redirect:/customer/createappointment";
 			}
 		}  
         return "home";

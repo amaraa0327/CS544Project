@@ -14,14 +14,20 @@
                 <div class="collapse navbar-collapse navbar-right">
                     <ul class="nav navbar-nav">
 
-                        <li class="active"><a href="/index">Home</a></li>
+                        <li class="active"><a href="/">Home</a></li>
                         <!-- <li><a href="/about-us">About Us</a></li> -->
                         
                         <sec:authorize access="hasRole('ROLE_CUSTOMER') and isAuthenticated()">
-                        	<li><a href="/manage">Manage</a></li>
-                        	<li><a href="/appointment">Appointment</a></li>
+                        	<li><a href="/customer/createappointment">Book Appointment</a></li>
+                        	<li><a href="/customer/listappointment">Appointments</a></li>
                         </sec:authorize>
 						
+						<sec:authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
+							<li><a href="/admin/sessions">Sessions</a></li>
+                        	<li><a href="/admin/appointmentManage">Book Appointment</a></li>
+                        	<li><a href="/admin/appointmentDelete">Appointments</a></li>
+                        </sec:authorize>
+                        
 						<c:choose>
 						    <c:when test="${pageContext.request.userPrincipal.name==null}">
 						        <li><a href="/login">Login</a></li>
